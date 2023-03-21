@@ -15,11 +15,12 @@ const splashSection = await getContentById(fetch, contentId);
 const { contentList } = splashSection.data[0].Data;
 
 // Get splash section content detail
-const response = await getContentById(fetch, contentList.Ids[0]);
+const splashContentId = contentList.Ids[0];
+const response = await getContentById(fetch, splashContentId);
 const { githubUrl, splashText, splashLogo, splashImage } = response.data[0].Data;
 ---
 
-<section class="relative h-full bg-black" data-nimvio-content-id={contentId}>
+<section class="relative h-full bg-black">
   <Starfield />
   <GitHubCorner href={githubUrl} />
   <div id="splash-bg-fallback" class="absolute inset-0 hidden opacity-40">
@@ -33,9 +34,11 @@ const { githubUrl, splashText, splashLogo, splashImage } = response.data[0].Data
         src={splashLogo.MediaUrl}
         alt="Splash Logo"
         class="h-24 text-white md:h-32"
+        data-nimvio-content-id={splashContentId}
       />
       <div
         class="gradient-text text-center font-extrabold tracking-tighter text-8xl"
+        data-nimvio-content-id={splashContentId}
       >
         <Fragment set:html={splashText} />
       </div>
@@ -43,6 +46,7 @@ const { githubUrl, splashText, splashLogo, splashImage } = response.data[0].Data
     <div
       id="astronaut"
       class="w-2/3 max-w-3xl self-start sm:w-10/12 sm:self-auto sm:justify-self-start"
+      data-nimvio-content-id={splashContentId}
     >
       <Picture
         class="object-cover w-full h-full"

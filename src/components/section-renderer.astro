@@ -15,9 +15,9 @@ const { type, title, description } = Data;
 ---
 {
   type !== "Splash" && (
-    <ContentSection title={title} id={type.toLowerCase()}>
+    <ContentSection title={title} id={type.toLowerCase()} contentId={contentId}>
       {type === "Intro" && <Icon slot="eyebrow" name="logomark" class="h-32" />}
-      <Fragment slot="lead" set:html={description} />
+      <Fragment slot="lead" set:html={description}/>
       {type === "Intro" && <Intro data={Data} />}
       
       {type === "Features" && <Features data={Data} />}
