@@ -1,0 +1,37 @@
+---
+import DefaultLayout from "~/layouts/default.astro";
+import Splash from "~/components/splash.astro";
+import SectionRenderer from "~/components/section-renderer.astro";
+import { getSubcontentByParentIdAndTemplateName } from "~/utils/dataFetching";
+import "@fontsource/inter/variable.css";
+import "~/styles/index.css";
+
+const response = await getSubcontentByParentIdAndTemplateName(
+  fetch,
+  import.meta.env.PUBLIC_PAGE_CONTENT_ID,
+  "Page"
+);
+interface Layout {
+  ContentIDs: Array<String>;
+}
+
+const layout: Layout = response.data[0].Data.layout;
+interface Section {
+  ContentIDs: Array<String>;
+}
+
+const sections: Section = response.data[0].Data.sections;
+const splashContentId = sections.ContentIDs[0];
+---
+
+<DefaultLayout layoutId={layout.ContentIDs[0]}>
+  {splashContentId && (<Splash contentId={sections.ContentIDs[0]} />)}
+
+  <div class="space-y-24 px-8 py-32">
+    {
+      sections.ContentIDs.map(data => (
+        <SectionRenderer contentId={data} />
+      ))
+    }
+  </div>
+</DefaultLayout>

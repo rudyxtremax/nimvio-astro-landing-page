@@ -1,0 +1,9 @@
+---
+import FeatureCard from "~/components/feature-card.astro";
+
+const { data } = Astro.props;
+---
+
+<ul class="grid max-w-6xl grid-cols-1 md:grid-cols-2 lg:grid-cols-3">
+  {data.contentList.ContentIDs.map((id: string) => <FeatureCard contentId={id} />)}
+</ul>

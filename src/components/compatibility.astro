@@ -1,0 +1,13 @@
+---
+import CompatibilityList from "~/components/compatibility-list.astro";
+
+const { data } = Astro.props;
+---
+
+<Fragment>
+  {
+    data.contentList.ContentIDs.map((id: string) => (
+      <CompatibilityList contentId={id} />
+    ))
+  }
+</Fragment>

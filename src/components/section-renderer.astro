@@ -1,0 +1,28 @@
+---
+import { Icon } from "astro-icon";
+import Intro from "~/components/intro.astro";
+import Features from "~/components/features.astro";
+import Compatibility from "~/components/compatibility.astro";
+import Showcase from "~/components/showcase.astro";
+import ContentSection from "~/components/content-section.astro";
+import { getContentById } from "~/utils/dataFetching";
+
+const { contentId } = Astro.props;
+
+const response = await getContentById(fetch, contentId);
+const { Data } = response.data[0];
+const { type, title, description } = Data;
+---
+{
+  type !== "Splash" && (
+    <ContentSection title={title} id={type.toLowerCase()}>
+      {type === "Intro" && <Icon slot="eyebrow" name="logomark" class="h-32" />}
+      <Fragment slot="lead" set:html={description} />
+      {type === "Intro" && <Intro data={Data} />}
+      
+      {type === "Features" && <Features data={Data} />}
+      {type === "Compatibility" && <Compatibility data={Data} />}
+      {type === "Showcase" && <Showcase data={Data} />}
+    </ContentSection>
+  )
+}

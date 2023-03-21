@@ -1,0 +1,34 @@
+---
+import { getContentById } from "~/utils/dataFetching";
+import Header from "~/components/header.astro";
+import Footer from "~/components/footer.astro";
+
+const { name, Ids } = Astro.props;
+
+let placeholders = await Promise.all(
+  Ids.map(async (id: string) => {
+    const response = await getContentById(fetch, id);
+    const { Data } = response.data[0];
+    if (Data.name.toLowerCase() === name) {
+      return Data;
+    }
+  })
+);
+
+const { widgets } = placeholders.filter(data => data !== undefined)[0];
+
+const widgetsData = await Promise.all(
+ widgets.ContentIDs.map(async (id: string) => {
+    const response = await getContentById(fetch, id);
+    const { Data } = response.data[0];
+    return Data;
+  })
+);
+
+const { type, contentList } = widgetsData[0];
+
+const id = contentList.Ids[0];
+---
+
+{id && type === "Header" && <Header id={id}/>}
+{id && type === "Footer" && <Footer ids={contentList.Ids} />}
