@@ -19,7 +19,7 @@ const response = await getContentById(fetch, contentList.Ids[0]);
 const { githubUrl, splashText, splashLogo, splashImage } = response.data[0].Data;
 ---
 
-<section class="relative h-full bg-black">
+<section class="relative h-full bg-black" data-nimvio-content-id={contentId}>
   <Starfield />
   <GitHubCorner href={githubUrl} />
   <div id="splash-bg-fallback" class="absolute inset-0 hidden opacity-40">
