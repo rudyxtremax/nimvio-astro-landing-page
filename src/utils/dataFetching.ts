@@ -80,6 +80,7 @@ export const getSubcontentByParentIdAndTemplateName = async (
           query {
               content(contentId:"${id}", templateName: "${name}", retrieveChild: true, depth: 1) {
                 Data
+                ContentID
             }
           }
         `,
