@@ -43,6 +43,7 @@ let navItems: Array<NavItem> = items.map((data: SectionData) => ({
     class="flex items-center gap-3 hover:!text-default"
     href="#"
     data-nimvio-content-id={id}
+    data-header-content-id={id}
   >
     <img
       src={logoLight.MediaUrl}
@@ -186,17 +187,21 @@ let navItems: Array<NavItem> = items.map((data: SectionData) => ({
   });
 </script>
 
-<script is:inline src="https://www.unpkg.com/@nimvio/live-preview-sdk"></script>
-<script define:vars={{ contentId: id }}>
-  window.WebLink.init({
+<script>
+  import WebLink from "@nimvio/live-preview-sdk";
+  const nimvioSdk = WebLink.init({
     queryParams: "preview",
     disableWeblink: false,
   });
 
-  window.WebLink.instance.livePreviewUtils.onPreviewContentChange((newData) => {
+  const contentId = document
+    .querySelector(`[data-header-content-id]`)
+    ?.getAttribute(`data-header-content-id`);
+
+  nimvioSdk.livePreviewUtils.onPreviewContentChange((newData) => {
     const { id, title } = newData.formData;
 
-    console.log('Header Astor', id, contentId)
+    console.log("Header Astor", id, contentId);
 
     if (id === contentId) {
       const elementTitle = document.querySelector(`[data-props-name="title"]`);
