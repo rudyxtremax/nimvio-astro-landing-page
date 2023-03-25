@@ -39,7 +39,11 @@ let navItems: Array<NavItem> = items.map((data: SectionData) => ({
   id="page-header"
   class="absolute bottom-0 z-20 flex w-full items-center justify-between border-b border-transparent px-8 py-4 text-white"
 >
-  <a class="flex items-center gap-3 hover:!text-default" href="#" data-nimvio-content-id={id}>
+  <a
+    class="flex items-center gap-3 hover:!text-default"
+    href="#"
+    data-nimvio-content-id={id}
+  >
     <img
       src={logoLight.MediaUrl}
       alt="Header Logo"
@@ -52,7 +56,7 @@ let navItems: Array<NavItem> = items.map((data: SectionData) => ({
       class="hidden h-10"
       id="logo-theme-dark"
     />
-    <h1 class="sm:block">{title}</h1>
+    <h1 class="sm:block" data-props-name="title">{title}</h1>
   </a>
   <div>
     <div class="flex items-center gap-6">
