@@ -13,7 +13,7 @@ const splashSection = await getContentById(fetch, contentId);
 const { contentList } = splashSection.data[0].Data;
 
 // Get splash section content detail
-const splashContentId = contentList.Ids[0];
+const splashContentId = contentList.ContentIDs[0];
 const response = await getContentById(fetch, splashContentId);
 const { githubUrl, splashText, splashLogo, splashImage } =
   response.data[0].Data;
@@ -44,7 +44,7 @@ const { githubUrl, splashText, splashLogo, splashImage } =
         data-nimvio-content-id={splashContentId}
         id="splashText"
       >
-        <Fragment set:html={splashText}/>
+        <Fragment set:html={splashText} />
       </div>
     </h2>
     <div
@@ -53,7 +53,7 @@ const { githubUrl, splashText, splashLogo, splashImage } =
       data-nimvio-content-id={splashContentId}
     >
       <img
-        class="object-cover w-full h-full"
+        class="h-full w-full object-cover"
         id="splashImage"
         src={splashImage.MediaUrl}
         sizes={sizes}
@@ -131,7 +131,7 @@ const { githubUrl, splashText, splashLogo, splashImage } =
       elSplashLogo!.setAttribute("src", splashLogo.MediaUrl);
 
       const elSplashImage = document.querySelector("#splashImage");
-      elSplashImage!.setAttribute("src", splashImage.MediaUrl);      
+      elSplashImage!.setAttribute("src", splashImage.MediaUrl);
     }
   });
 </script>

@@ -15,10 +15,10 @@ let placeholders = await Promise.all(
   })
 );
 
-const { widgets } = placeholders.filter(data => data !== undefined)[0];
+const { widgets } = placeholders.filter((data) => data !== undefined)[0];
 
 const widgetsData = await Promise.all(
- widgets.ContentIDs.map(async (id: string) => {
+  widgets.ContentIDs.map(async (id: string) => {
     const response = await getContentById(fetch, id);
     const { Data } = response.data[0];
     return Data;
@@ -27,8 +27,8 @@ const widgetsData = await Promise.all(
 
 const { type, contentList } = widgetsData[0];
 
-const id = contentList.Ids[0];
+const id = contentList.ContentIDs[0];
 ---
 
-{id && type === "Header" && <Header id={id}/>}
-{id && type === "Footer" && <Footer ids={contentList.Ids} />}
+{id && type === "Header" && <Header id={id} />}
+{id && type === "Footer" && <Footer ids={contentList.ContentIDs} />}
