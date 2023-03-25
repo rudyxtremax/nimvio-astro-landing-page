@@ -186,14 +186,14 @@ let navItems: Array<NavItem> = items.map((data: SectionData) => ({
   });
 </script>
 
+<script is:inline src="https://www.unpkg.com/@nimvio/live-preview-sdk"></script>
 <script define:vars={{ contentId: id }}>
-  import WebLink from "@nimvio/live-preview-sdk";
-  const nimvioSdk = WebLink.init({
+  window.WebLink.init({
     queryParams: "preview",
     disableWeblink: false,
   });
 
-  nimvioSdk.livePreviewUtils.onPreviewContentChange((newData) => {
+  window.WebLink.instance.livePreviewUtils.onPreviewContentChange((newData) => {
     const { id, title } = newData.formData;
 
     console.log('Header Astor', id, contentId)
