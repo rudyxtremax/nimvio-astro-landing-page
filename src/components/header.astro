@@ -186,13 +186,8 @@ let navItems: Array<NavItem> = items.map((data: SectionData) => ({
   });
 </script>
 
-<script>
-  import WebLink from "@nimvio/live-preview-sdk";
-  const nimvioSdk = WebLink.init({
-    queryParams: "preview",
-    disableWeblink: false,
-  });
-  nimvioSdk.livePreviewUtils.onPreviewContentChange((newData) => {
+<script is:inline>
+  window.nimvioSdk.livePreviewUtils.onPreviewContentChange((newData) => {
     console.log(newData);
 
     const {title} = newData.formData;
