@@ -103,12 +103,14 @@ let navItems: Array<NavItem> = items.map((data: SectionData) => ({
               alt="Header Logo"
               id="logo-mobile-theme-light"
               class="h-16"
+              data-props-name="logoLight"
             />
             <img
               src={logoDark.MediaUrl}
               alt="Header Logo"
               class="hidden h-16"
               id="logo-mobile-theme-dark"
+              data-props-name="logoDark"
             />
           </div>
           <nav>
@@ -195,18 +197,23 @@ let navItems: Array<NavItem> = items.map((data: SectionData) => ({
   });
 
   const contentId = document
-    .querySelector(`[data-header-content-id]`)
-    ?.getAttribute(`data-header-content-id`);
+    .querySelector("[data-header-content-id]")
+    ?.getAttribute("data-header-content-id");
 
   nimvioSdk.livePreviewUtils.onPreviewContentChange((newData) => {
-    const { id } = newData;
-    const { title } = newData.formData;
+    const { id, formData } = newData;
+    const { title, logoLight } = formData;
 
-    console.log("Header Astor", id, contentId);
+    console.log("Form Data", formData);
 
     if (id === contentId) {
       const elementTitle = document.querySelector(`[data-props-name="title"]`);
       elementTitle.innerHTML = title;
+
+      const elementLogoLight = document.querySelector(
+        `[data-props-name="logoLight"]`
+      );
+      elementLogoLight.setAttribute("src", logoLight.MediaUrl);
     }
   });
 </script>
