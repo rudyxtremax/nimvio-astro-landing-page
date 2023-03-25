@@ -186,17 +186,6 @@ let navItems: Array<NavItem> = items.map((data: SectionData) => ({
   });
 </script>
 
-<script is:inline>
-  window.nimvioSdk.livePreviewUtils.onPreviewContentChange((newData) => {
-    console.log(newData);
-
-    const {title} = newData.formData;
-
-    const elementTitle = document.querySelector(`[data-props-name="title"]`);
-    elementTitle.innerHTML = title;
-  });
-</script>
-
 <noscript>
   <style>
     #open-nav-button {

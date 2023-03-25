@@ -64,7 +64,8 @@ const {
   </head>
   <body
     class="overflow-x-hidden bg-default text-default text-base selection:bg-secondary selection:text-white"
-    data-nimvio-project-id={`${import.meta.env.PUBLIC_PROJECT_ID}`}>
+    data-nimvio-project-id={`${import.meta.env.PUBLIC_PROJECT_ID}`}
+  >
     <slot name="header">
       <Placeholder Ids={placeholders.ContentIDs} name="header" />
     </slot>
@@ -83,5 +84,12 @@ const {
   const nimvioSdk = window.WebLink.init({
     queryParams: "preview",
     disableWeblink: false,
+  });
+
+  nimvioSdk.livePreviewUtils.onPreviewContentChange((newData) => {
+    const { title } = newData.formData;
+
+    const elementTitle = document.querySelector(`[data-props-name="title"]`);
+    elementTitle.innerHTML = title;
   });
 </script>
