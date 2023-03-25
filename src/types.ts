@@ -47,3 +47,10 @@ export interface HeaderContent {
   logoLight: { MediaUrl: string };
   logoDark: { MediaUrl: string };
 }
+
+export interface SplashContent {
+  githubUrl: string;
+  splashImage: { MediaUrl: string };
+  splashLogo: { MediaUrl: string };
+  splashText: string;
+}

@@ -1,9 +1,10 @@
 ---
-const { href } = Astro.props;
+const { href, id } = Astro.props;
 ---
 
 <!-- https://github.com/tholman/github-corners -->
 <a
+  id={id}
   href={href}
   aria-label="View source on GitHub"
   class="absolute top-0 right-0 z-10 text-black hover:text-black focus:ring-0 focus:ring-offset-0"

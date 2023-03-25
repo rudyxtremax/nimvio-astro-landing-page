@@ -1,11 +1,9 @@
 ---
-import { Picture } from "@astrojs/image/components";
 import HeroImage from "~/components/hero-image.astro";
 import Starfield from "~/components/starfield.astro";
 import GitHubCorner from "./github-corner.astro";
 import { getContentById } from "~/utils/dataFetching";
 
-const widths = [450, 800];
 const sizes = "(min-width: 640px) 42vw, 67vw";
 
 const { contentId } = Astro.props;
@@ -21,9 +19,12 @@ const { githubUrl, splashText, splashLogo, splashImage } =
   response.data[0].Data;
 ---
 
-<section class="relative h-screen bg-black">
+<section
+  class="relative h-screen bg-black"
+  data-splash-content-id={splashContentId}
+>
   <Starfield />
-  <GitHubCorner href={githubUrl} />
+  <GitHubCorner href={githubUrl} id="githubUrl" />
   <div id="splash-bg-fallback" class="absolute inset-0 hidden opacity-40">
     <HeroImage />
   </div>
@@ -36,13 +37,14 @@ const { githubUrl, splashText, splashLogo, splashImage } =
         alt="Splash Logo"
         class="h-24 text-white md:h-32"
         data-nimvio-content-id={splashContentId}
-        data-splash-content-id={splashContentId}
+        id="splashLogo"
       />
       <div
         class="gradient-text text-center font-extrabold tracking-tighter text-8xl"
         data-nimvio-content-id={splashContentId}
+        id="splashText"
       >
-        <Fragment set:html={splashText} />
+        <Fragment set:html={splashText}/>
       </div>
     </h2>
     <div
@@ -50,11 +52,10 @@ const { githubUrl, splashText, splashLogo, splashImage } =
       class="w-2/3 max-w-3xl self-start sm:w-10/12 sm:self-auto sm:justify-self-start"
       data-nimvio-content-id={splashContentId}
     >
-      <Picture
+      <img
         class="object-cover w-full h-full"
+        id="splashImage"
         src={splashImage.MediaUrl}
-        aspectRatio="1:1"
-        widths={widths}
         sizes={sizes}
         loading="eager"
         alt="A floating astronaut in a space suit"
@@ -103,7 +104,7 @@ const { githubUrl, splashText, splashLogo, splashImage } =
 
 <script>
   import WebLink from "@nimvio/live-preview-sdk";
-  import type { LivePreviewData } from "~/types";
+  import type { LivePreviewData, SplashContent } from "~/types";
 
   const nimvioSdk = WebLink.init({
     queryParam: "preview",
@@ -116,18 +117,21 @@ const { githubUrl, splashText, splashLogo, splashImage } =
 
   nimvioSdk.livePreviewUtils.onPreviewContentChange((newData) => {
     const { id, formData }: LivePreviewData = newData;
-    console.log(id, contentId, formData);
-    // const { title, logoLight, logoDark }: HeaderContent = formData;
+    const { githubUrl, splashImage, splashLogo, splashText }: SplashContent =
+      formData;
 
-    // if (id === contentId) {
-    //   const elementTitle = document.querySelector(`[data-props-name="title"]`);
-    //   elementTitle!.innerHTML = title;
+    if (id === contentId) {
+      const elGithub = document.querySelector("#githubUrl");
+      elGithub!.setAttribute("href", githubUrl);
 
-    //   const elementLogoLight = document.querySelector("#logo-theme-light");
-    //   elementLogoLight!.setAttribute("src", logoLight.MediaUrl);
+      const elSplashText = document.querySelector("#splashText");
+      elSplashText!.innerHTML = splashText;
 
-    //   const elementLogoDark = document.querySelector("#logo-theme-dark");
-    //   elementLogoDark!.setAttribute("src", logoDark.MediaUrl);
-    // }
+      const elSplashLogo = document.querySelector("#splashLogo");
+      elSplashLogo!.setAttribute("src", splashLogo.MediaUrl);
+
+      const elSplashImage = document.querySelector("#splashImage");
+      elSplashImage!.setAttribute("src", splashImage.MediaUrl);      
+    }
   });
 </script>
