@@ -17,7 +17,8 @@ const { contentList } = splashSection.data[0].Data;
 // Get splash section content detail
 const splashContentId = contentList.Ids[0];
 const response = await getContentById(fetch, splashContentId);
-const { githubUrl, splashText, splashLogo, splashImage } = response.data[0].Data;
+const { githubUrl, splashText, splashLogo, splashImage } =
+  response.data[0].Data;
 ---
 
 <section class="relative h-screen bg-black">
@@ -35,6 +36,7 @@ const { githubUrl, splashText, splashLogo, splashImage } = response.data[0].Data
         alt="Splash Logo"
         class="h-24 text-white md:h-32"
         data-nimvio-content-id={splashContentId}
+        data-splash-content-id={splashContentId}
       />
       <div
         class="gradient-text text-center font-extrabold tracking-tighter text-8xl"
@@ -98,3 +100,34 @@ const { githubUrl, splashText, splashLogo, splashImage } = response.data[0].Data
     }
   }
 </style>
+
+<script>
+  import WebLink from "@nimvio/live-preview-sdk";
+  import type { LivePreviewData } from "~/types";
+
+  const nimvioSdk = WebLink.init({
+    queryParam: "preview",
+    disableWeblink: false,
+  });
+
+  const contentId = document
+    .querySelector("[data-splash-content-id]")
+    ?.getAttribute("data-splash-content-id");
+
+  nimvioSdk.livePreviewUtils.onPreviewContentChange((newData) => {
+    const { id, formData }: LivePreviewData = newData;
+    console.log(id, contentId, formData);
+    // const { title, logoLight, logoDark }: HeaderContent = formData;
+
+    // if (id === contentId) {
+    //   const elementTitle = document.querySelector(`[data-props-name="title"]`);
+    //   elementTitle!.innerHTML = title;
+
+    //   const elementLogoLight = document.querySelector("#logo-theme-light");
+    //   elementLogoLight!.setAttribute("src", logoLight.MediaUrl);
+
+    //   const elementLogoDark = document.querySelector("#logo-theme-dark");
+    //   elementLogoDark!.setAttribute("src", logoDark.MediaUrl);
+    // }
+  });
+</script>
