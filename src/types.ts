@@ -1,7 +1,7 @@
 export interface SectionData {
   Data: any;
   navigation: {
-    showInMenu: boolean
+    showInMenu: boolean;
   };
   navigationTitle: string;
   url: string;
@@ -35,4 +35,15 @@ export interface ShowcaseSite {
   title: string;
   image: ImageMetadata;
   url: string;
+}
+
+export interface LivePreviewData {
+  id: string;
+  formData: any;
+}
+
+export interface HeaderContent {
+  title: string;
+  logoLight: { MediaUrl: string };
+  logoDark: { MediaUrl: string };
 }

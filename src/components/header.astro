@@ -190,8 +190,10 @@ let navItems: Array<NavItem> = items.map((data: SectionData) => ({
 
 <script>
   import WebLink from "@nimvio/live-preview-sdk";
+  import type { LivePreviewData, HeaderContent } from "~/types";
+
   const nimvioSdk = WebLink.init({
-    queryParams: "preview",
+    queryParam: "preview",
     disableWeblink: false,
   });
 
@@ -200,20 +202,18 @@ let navItems: Array<NavItem> = items.map((data: SectionData) => ({
     ?.getAttribute("data-header-content-id");
 
   nimvioSdk.livePreviewUtils.onPreviewContentChange((newData) => {
-    const { id, formData } = newData;
-    const { title, logoLight, logoDark } = formData;
-
-    console.log("Form Data", formData);
+    const { id, formData }: LivePreviewData = newData;
+    const { title, logoLight, logoDark }: HeaderContent = formData;
 
     if (id === contentId) {
       const elementTitle = document.querySelector(`[data-props-name="title"]`);
-      elementTitle.innerHTML = title;
+      elementTitle!.innerHTML = title;
 
       const elementLogoLight = document.querySelector("#logo-theme-light");
-      elementLogoLight.setAttribute("src", logoLight.MediaUrl);
+      elementLogoLight!.setAttribute("src", logoLight.MediaUrl);
 
       const elementLogoDark = document.querySelector("#logo-theme-dark");
-      elementLogoDark.setAttribute("src", logoDark.MediaUrl);
+      elementLogoDark!.setAttribute("src", logoDark.MediaUrl);
     }
   });
 </script>
