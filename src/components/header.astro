@@ -199,7 +199,8 @@ let navItems: Array<NavItem> = items.map((data: SectionData) => ({
     ?.getAttribute(`data-header-content-id`);
 
   nimvioSdk.livePreviewUtils.onPreviewContentChange((newData) => {
-    const { id, title } = newData.formData;
+    const { id } = newData;
+    const { title } = newData.formData;
 
     console.log("Header Astor", id, contentId);
 
