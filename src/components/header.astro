@@ -196,6 +196,8 @@ let navItems: Array<NavItem> = items.map((data: SectionData) => ({
   nimvioSdk.livePreviewUtils.onPreviewContentChange((newData) => {
     const { id, title } = newData.formData;
 
+    console.log('Header Astor', id, contentId)
+
     if (id === contentId) {
       const elementTitle = document.querySelector(`[data-props-name="title"]`);
       elementTitle.innerHTML = title;
