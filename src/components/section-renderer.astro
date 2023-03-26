@@ -1,5 +1,4 @@
 ---
-import { Icon } from "astro-icon";
 import Intro from "~/components/intro.astro";
 import Features from "~/components/features.astro";
 import Compatibility from "~/components/compatibility.astro";
@@ -11,15 +10,32 @@ const { contentId } = Astro.props;
 
 const response = await getContentById(fetch, contentId);
 const { Data } = response.data[0];
-const { type, title, description } = Data;
+const { type, title, description, logomarkLight, logomarkDark } = Data;
 ---
 {
   type !== "Splash" && (
     <ContentSection title={title} id={type.toLowerCase()} contentId={contentId}>
-      {type === "Intro" && <Icon slot="eyebrow" name="logomark" class="h-32" />}
-      <Fragment slot="lead" set:html={description}/>
+      {type === "Intro" && (
+        <img
+          src={logomarkLight.MediaUrl} 
+          alt="Logomark Light"
+          class="h-32"
+          id="intro-logomark-light"
+          slot="eyebrow"
+        />
+      )}
+      {type === "Intro" && (
+        <img
+          src={logomarkDark.MediaUrl}
+          alt="Logomark Dark"
+          class="hidden h-32"
+          id="intro-logomark-dark"
+          slot="eyebrow"
+        />
+      )}
+      <Fragment slot="lead" set:html={description} />
       {type === "Intro" && <Intro data={Data} />}
-      
+
       {type === "Features" && <Features data={Data} />}
       {type === "Compatibility" && <Compatibility data={Data} />}
       {type === "Showcase" && <Showcase data={Data} />}

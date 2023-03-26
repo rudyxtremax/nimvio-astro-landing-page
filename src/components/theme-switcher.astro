@@ -68,15 +68,30 @@ import { Icon } from "astro-icon";
       ?.classList.remove("hidden");
   };
 
+  const updateLogomark = () => {
+    const themeCurrent = getThemeCurrent();
+    const themeNext = getThemeNext();
+
+    // Intro logo mark
+    document
+      .querySelector(`#intro-logomark-${themeCurrent}`)
+      ?.classList.add("hidden");
+    document
+      .querySelector(`#intro-logomark-${themeNext}`)
+      ?.classList.remove("hidden");
+  };
+
   button.addEventListener("click", () => {
     const themeNext = getThemeNext();
     document.documentElement.dataset.theme = themeNext;
     localStorage.setItem("theme", themeNext);
     updateIcon();
     updateLogo();
+    updateLogomark();
   });
 
   updateIcon();
+  updateLogomark();
 </script>
 
 <style>
