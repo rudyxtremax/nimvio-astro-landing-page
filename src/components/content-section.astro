@@ -47,9 +47,14 @@ const { title, id, contentId } = Astro.props;
         if (id === contentId) {
           const {title, description} = formData;
 
+          // Title update
           const sectionEl = document.querySelector(`[data-contentid='${id}']`);
           sectionEl!.querySelector("h2")!.innerText = title;
-          sectionEl!.querySelector("p")!.replaceWith(description);
+
+          // Description update
+          let descTmpl = document.createElement('template');
+          descTmpl.innerHTML = description.trim();
+          sectionEl!.querySelector("p")!.replaceWith(descTmpl.content);
         }
       });
     }
