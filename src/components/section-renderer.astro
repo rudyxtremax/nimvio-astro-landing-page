@@ -12,12 +12,13 @@ const response = await getContentById(fetch, contentId);
 const { Data } = response.data[0];
 const { type, title, description, logomarkLight, logomarkDark } = Data;
 ---
+
 {
   type !== "Splash" && (
     <ContentSection title={title} id={type.toLowerCase()} contentId={contentId}>
       {type === "Intro" && (
         <img
-          src={logomarkLight.MediaUrl} 
+          src={logomarkLight.MediaUrl}
           alt="Logomark Light"
           class="h-32"
           id="intro-logomark-light"
@@ -33,12 +34,15 @@ const { type, title, description, logomarkLight, logomarkDark } = Data;
           slot="eyebrow"
         />
       )}
-      <Fragment slot="lead" set:html={description} />
       {type === "Intro" && <Intro data={Data} />}
-
       {type === "Features" && <Features data={Data} />}
       {type === "Compatibility" && <Compatibility data={Data} />}
       {type === "Showcase" && <Showcase data={Data} />}
+
+      <Fragment
+        slot="lead"
+        set:html={description}
+      />
     </ContentSection>
   )
 }

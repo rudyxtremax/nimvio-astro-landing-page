@@ -21,8 +21,6 @@ const { title, id, contentId } = Astro.props;
       {title}
     </h2>
   </div>
-  <p class="max-w-xl text-center font-extrabold text-2xl">
-    <slot name="lead" />
-  </p>
+  <slot name="lead" />
   <slot />
 </section>
