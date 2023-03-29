@@ -6,17 +6,59 @@ const { contentId } = Astro.props;
 
 const response = await getContentById(fetch, contentId);
 const { title, description, icon } = response.data[0].Data;
-const textDescription = description.replace(/<[^>]*>/g, '');
+const textDescription = description.replace(/<[^>]*>/g, "");
 ---
 
 {
   (
-    <li class="flex flex-col items-center gap-4 border border-default bg-offset p-6">
-      <div class="h-16 w-16 rounded-full border-2 border-current p-3">
-        <Icon name={icon} />
-      </div>
-      <p class="text-center font-extrabold text-xl">{title}</p>
-      <p class="text-center text-offset text-sm">{textDescription}</p>
-    </li>
+    <feature-card data-nimvio-content-id={contentId}>
+      <li class="border-default bg-offset flex flex-col items-center gap-4 border p-6">
+        <div class="h-16 w-16 rounded-full border-2 border-current p-3">
+          <Icon name={icon} />
+        </div>
+        <p class="text-center text-xl font-extrabold">{title}</p>
+        <p class="text-offset text-center text-sm">{textDescription}</p>
+      </li>
+    </feature-card>
   )
 }
+
+<script>
+  import WebLink from "@nimvio/live-preview-sdk";
+  import type { LivePreviewData } from "~/types";
+
+  class FeatureCard extends HTMLElement {
+    constructor() {
+      super();
+
+      const nimvioSdk = WebLink.init({
+        queryParam: "preview",
+        disableWeblink: false,
+      });
+
+      // Read the contentid from the data attribute.
+      const contentId = this.dataset.nimvioContentId;
+
+      nimvioSdk.livePreviewUtils.onPreviewContentChange((newData) => {
+        const { id, formData }: LivePreviewData = newData;
+        if (id === contentId) {
+          const { title, description } = formData;
+
+          const sectionEl = document.querySelector(
+            `[data-nimvio-content-id='${id}']`
+          );
+
+          const textEl = sectionEl!.querySelectorAll("p");
+
+          // Text update
+          textEl[0]!.innerText = title;
+
+          // Description update
+          textEl[1]!.innerText = description.replace(/<[^>]*>/g, "");
+        }
+      });
+    }
+  }
+
+  customElements.define("feature-card", FeatureCard);
+</script>
