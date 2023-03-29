@@ -17,7 +17,10 @@ const items: { data: Array<any> } = await getSubcontentByParentId(
 );
 ---
 
-<div class="w-full max-w-6xl space-y-2">
+<compatibility-list
+  class="w-full max-w-6xl space-y-2"
+  data-nimvio-content-id={contentId}
+>
   <div class="relative border border-default bg-offset px-6 pt-8 pb-4">
     <h3
       class="absolute top-0 right-4 -translate-y-1/2 rounded-full border border-current bg-default px-4 py-1 uppercase tracking-tight text-xs"
@@ -40,4 +43,43 @@ const items: { data: Array<any> } = await getSubcontentByParentId(
   <p class="text-right text-sm">
     <a class="text-primary" href={description}> ...and more &rarr;</a>
   </p>
-</div>
+</compatibility-list>
+
+<script>
+  import WebLink from "@nimvio/live-preview-sdk";
+  import type { LivePreviewData } from "~/types";
+
+  class CompatibilityList extends HTMLElement {
+    constructor() {
+      super();
+
+      const nimvioSdk = WebLink.init({
+        queryParam: "preview",
+        disableWeblink: false,
+      });
+
+      // Read the contentid from the data attribute.
+      const contentId = this.dataset.nimvioContentId;
+
+      nimvioSdk.livePreviewUtils.onPreviewContentChange((newData) => {
+        const { id, formData }: LivePreviewData = newData;
+        if (id === contentId) {
+          const { name, description } = formData;
+
+          const sectionEl = document.querySelector(
+            `[data-nimvio-content-id='${id}']`
+          );
+
+          // Text update
+          sectionEl!.querySelector("h3")!.innerText = name;
+
+          // URL update
+          let linkWrapper = sectionEl!.querySelector("p");
+          linkWrapper!.querySelector("a")!.setAttribute("href", description);
+        }
+      });
+    }
+  }
+
+  customElements.define("compatibility-list", CompatibilityList);
+</script>
