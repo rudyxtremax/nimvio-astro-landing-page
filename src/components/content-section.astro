@@ -45,19 +45,18 @@ const { title, id, contentId } = Astro.props;
       nimvioSdk.livePreviewUtils.onPreviewContentChange((newData) => {
         const { id, formData }: LivePreviewData = newData;
         if (id === contentId) {
-          const {title, description, logomarkLight, logomarkDark} = formData;
+          const { title, description, logomarkLight, logomarkDark } = formData;
 
           // Title update
           const sectionEl = document.querySelector(`[data-contentid='${id}']`);
           sectionEl!.querySelector("h2")!.innerText = title;
 
           // Description update
-          let descTmpl = document.createElement('template');
+          let descTmpl = document.createElement("template");
           descTmpl.innerHTML = description.trim();
           sectionEl!.querySelector("p")!.replaceWith(descTmpl.content);
 
           // Image update if any (e.g. Intro section)
-          // Content_5368ab8d-0313-47c6-9de4-d8659466bdfa
           let introImgLight = sectionEl!.querySelector("#intro-logomark-light");
           let introImgDark = sectionEl!.querySelector("#intro-logomark-dark");
           if (introImgLight && introImgDark) {
