@@ -2,6 +2,10 @@ const defaultTheme = require("tailwindcss/defaultTheme");
 
 module.exports = {
   content: ["./src/**/*.{astro,html,js,jsx,svelte,ts,tsx,vue}"],
+  safelist: [
+    'max-w-xl',
+    'text-2xl',
+  ],
   theme: {
     extend: {
       fontFamily: {
