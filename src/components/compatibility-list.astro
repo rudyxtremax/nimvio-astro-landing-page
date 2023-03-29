@@ -1,5 +1,6 @@
 ---
 import { Icon } from "astro-icon";
+import ListItem from "./list-item.astro";
 import { getContentById, getSubcontentByParentId } from "~/utils/dataFetching";
 
 export interface Props {
@@ -30,12 +31,7 @@ const items: { data: Array<any> } = await getSubcontentByParentId(
     <ul class="grid grid-cols-2 gap-8 sm:grid-cols-3 md:grid-cols-6">
       {
         items.data.map((item) => (
-          <li>
-            <a class="flex flex-col items-center gap-2" href={item.Data.url}>
-              <Icon class="h-12" name={item.Data.icon} />
-              <span>{item.Data.title}</span>
-            </a>
-          </li>
+          <ListItem item={item}/>
         ))
       }
     </ul>

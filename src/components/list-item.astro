@@ -1,0 +1,51 @@
+---
+import { Icon } from "astro-icon";
+const { item } = Astro.props;
+---
+
+<list-item data-nimvio-content-id={item.ContentID}>
+  <li>
+    <a class="flex flex-col items-center gap-2" href={item.Data.url}>
+      <Icon class="h-12" name={item.Data.icon} />
+      <span>{item.Data.title}</span>
+    </a>
+  </li>
+</list-item>
+
+<script>
+  import WebLink from "@nimvio/live-preview-sdk";
+  import type { LivePreviewData } from "~/types";
+
+  class ListItem extends HTMLElement {
+    constructor() {
+      super();
+
+      const nimvioSdk = WebLink.init({
+        queryParam: "preview",
+        disableWeblink: false,
+      });
+
+      // Read the contentid from the data attribute.
+      const contentId = this.dataset.nimvioContentId;
+
+      nimvioSdk.livePreviewUtils.onPreviewContentChange((newData) => {
+        const { id, formData }: LivePreviewData = newData;
+        if (id === contentId) {
+          const { title, url } = formData;
+
+          const sectionEl = document.querySelector(
+            `[data-nimvio-content-id='${id}']`
+          );
+
+          // URL update
+          sectionEl!.querySelector("a")!.setAttribute("href", url);
+
+          // Text update
+          sectionEl!.querySelector("span")!.innerText = title;
+        }
+      });
+    }
+  }
+
+  customElements.define("list-item", ListItem);
+</script>

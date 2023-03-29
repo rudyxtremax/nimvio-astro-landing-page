@@ -46,6 +46,7 @@ export const getSubcontentByParentId = async (client: Function, id: string) => {
           query {
               content(contentId:"${id}", retrieveChild: true, depth: 1) {
                 Data
+                ContentID
             }
           }
         `,
