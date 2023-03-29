@@ -11,7 +11,6 @@ const { title, id, contentId } = Astro.props;
 <content-section
   id={id}
   data-nimvio-content-id={contentId}
-  data-contentid={contentId}
   class="flex scroll-mt-24 flex-col items-center gap-4 space-y-8"
 >
   <div class="flex flex-col items-center gap-4">
@@ -40,7 +39,7 @@ const { title, id, contentId } = Astro.props;
       });
 
       // Read the contentid from the data attribute.
-      const contentId = this.dataset.contentid;
+      const contentId = this.dataset.nimvioContentId;
 
       nimvioSdk.livePreviewUtils.onPreviewContentChange((newData) => {
         const { id, formData }: LivePreviewData = newData;
