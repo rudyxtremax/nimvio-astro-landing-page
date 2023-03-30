@@ -3,14 +3,14 @@ import { Icon } from "astro-icon";
 const { item } = Astro.props;
 ---
 
-<list-item data-nimvio-content-id={item.ContentID}>
-  <li>
+<li>
+  <list-item data-nimvio-content-id={item.ContentID}>
     <a class="flex flex-col items-center gap-2" href={item.Data.url}>
       <Icon class="h-12" name={item.Data.icon} />
       <span>{item.Data.title}</span>
     </a>
-  </li>
-</list-item>
+  </list-item>
+</li>
 
 <script>
   import WebLink from "@nimvio/live-preview-sdk";

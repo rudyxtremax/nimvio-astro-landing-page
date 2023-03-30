@@ -11,15 +11,18 @@ const textDescription = description.replace(/<[^>]*>/g, "");
 
 {
   (
-    <feature-card data-nimvio-content-id={contentId}>
-      <li class="border-default bg-offset flex flex-col items-center gap-4 border p-6">
+    <li>
+      <feature-card
+        data-nimvio-content-id={contentId}
+        class="border-default bg-offset flex flex-col items-center gap-4 border p-6"
+      >
         <div class="h-16 w-16 rounded-full border-2 border-current p-3">
           <Icon name={icon} />
         </div>
         <p class="text-center text-xl font-extrabold">{title}</p>
         <p class="text-offset text-center text-sm">{textDescription}</p>
-      </li>
-    </feature-card>
+      </feature-card>
+    </li>
   )
 }
 
