@@ -2,12 +2,17 @@
 import CompatibilityList from "~/components/compatibility-list.astro";
 
 const { data } = Astro.props;
+const { contentList } = data;
+const { ContentIDs } = contentList;
 ---
 
 <Fragment>
   {
-    data.contentList.ContentIDs.map((id: string) => (
-      <CompatibilityList contentId={id} />
-    ))
+    contentList &&
+      ContentIDs &&
+      ContentIDs.length > 0 &&
+      data.contentList.ContentIDs.map((id: string) => (
+        <CompatibilityList contentId={id} />
+      ))
   }
 </Fragment>

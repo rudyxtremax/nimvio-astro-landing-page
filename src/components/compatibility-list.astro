@@ -29,7 +29,7 @@ const items: { data: Array<any> } = await getSubcontentByParentId(
     </h3>
     <ul class="grid grid-cols-2 gap-8 sm:grid-cols-3 md:grid-cols-6">
       {
-        items.data.map((item) => (
+        items.data.length > 0 && items.data.map((item) => (
           <ListItem item={item}/>
         ))
       }

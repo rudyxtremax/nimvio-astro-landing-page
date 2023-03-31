@@ -15,7 +15,7 @@ interface Layout {
   ContentIDs: Array<String>;
 }
 
-const {Data, ContentID} = response.data[0];
+const { Data, ContentID } = response.data[0];
 
 const layout: Layout = Data.layout;
 const homepageId = ContentID;
@@ -32,6 +32,9 @@ const splashContentId = sections.ContentIDs[0];
   {splashContentId && <Splash contentId={sections.ContentIDs[0]} />}
 
   <div class="space-y-24 px-8 py-32" data-nimvio-content-id={homepageId}>
-    {sections.ContentIDs.map((data) => <SectionRenderer contentId={data} />)}
+    {
+      sections.ContentIDs.length > 0 &&
+        sections.ContentIDs.map((data) => <SectionRenderer contentId={data} />)
+    }
   </div>
 </DefaultLayout>

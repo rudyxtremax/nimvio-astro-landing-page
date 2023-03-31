@@ -19,7 +19,7 @@ const items: { data: Array<any> } = await getSubcontentByParentId(
 
 <div class="max-w-6xl space-y-2">
   <div class="grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-3">
-    {items.data.map((item) => <ShowcaseCard item={item} />)}
+    {items.data.length > 0 && items.data.map((item) => <ShowcaseCard item={item} />)}
   </div>
   <p class="text-right text-sm">
     <a class="text-primary" href={description}>

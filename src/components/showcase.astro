@@ -1,12 +1,17 @@
 ---
 import ShowcaseList from "./showcase-list.astro";
 const { data } = Astro.props;
+const { contentList } = data;
+const { ContentIDs } = contentList;
 ---
 
 <Fragment>
   {
-    data.contentList.ContentIDs.map((id: string) => (
-      <ShowcaseList contentId={id} />
-    ))
+    contentList &&
+      ContentIDs &&
+      ContentIDs.length > 0 &&
+      data.contentList.ContentIDs.map((id: string) => (
+        <ShowcaseList contentId={id} />
+      ))
   }
 </Fragment>
